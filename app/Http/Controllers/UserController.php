@@ -34,7 +34,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email'=>['required','email'],
+            'name'=>['required','string'],
+            'password'=>['required','string'],
+            'image'=>['nullable','image'],
+            'profile'=>['required','array'],
+            'profile.age'=>['nullable','numeric'],
+            'profile.birth_date'=>['nullable','date'],
+        ]);
+
+        if($request->file('image')){
+            $image = $this->imageUpload($request->file('image'),'public');
+            return $image;
+        }
+        return $request->toArray();
     }
 
     /**

@@ -13,6 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
+
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('disk')->nullable();
+            $table->string('path');
+            $table->string('file_name');
+            $table->timestamps();
+        });  
+
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -26,6 +36,7 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->unique();
+            $table->foreignId('image_id')->nullable();
             $table->date('birth_date')->nullable();
             $table->integer('age')->nullable();
             $table->timestamps();
@@ -41,5 +52,7 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('images');
     }
 };

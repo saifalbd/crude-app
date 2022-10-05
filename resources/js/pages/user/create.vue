@@ -23,6 +23,11 @@
                     </div>
 
                     <div class="flex md12 mt-2">
+                       <div class="center">
+                        <va-file-upload v-model="image" type="single"   file-types="jpg,png" />
+                       </div>
+                    </div>
+                    <div class="flex md12 mt-2">
                         <div class="center">
                             <va-button @click="save">Save</va-button>
                         </div>
@@ -42,12 +47,13 @@ export default defineComponent({
     setup(props, context) {
         context.emit('x','aksks')
         const busy = ref(false);
-        const name = ref('');
-        const email = ref('');
-        const password = ref('');
+        const name = ref('saiful');
+        const email = ref('saiful@gmail.com');
+        const password = ref('1234585');
+        const image = ref({})
         const profile = reactive({
-            age: null,
-            birth_date: null
+            age:'',
+            birth_date:''
         })
 
 
@@ -55,17 +61,32 @@ export default defineComponent({
 
 
         const save = async () => {
+            busy.value = true;
             try {
-                const params = {
-                    email: email.value,
-                    name: name.value,
-                    password:password.value,
-                    profile
+                const f = new FormData
+                f.append('email',email.value);
+                f.append('name',name.value);
+                if(image.value instanceof File){
+                    f.append('image',image.value)
                 }
-                const { data } = await axios.post('/sk', params)
+              
+                f.append('password',password.value);
+                
+                f.append(`profile[age]`,profile.age);
+                f.append(`profile[birth_date]`,profile.birth_date);
+                // const params = {
+                //     email: email.value,
+                //     name: name.value,
+                //     password:password.value,
+                //     profile
+                // }
+                const url = route('api.user.store')
+                const { data } = await axios.post(url, f)
+                console.log(data)
             } catch (error) {
                 console.log(error)
             }
+            busy.value = false;
         }
 
         return {
@@ -73,6 +94,7 @@ export default defineComponent({
             name,
             email,
             password,
+            image,
             profile,
             emailRule,
             save
