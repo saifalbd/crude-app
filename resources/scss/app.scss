@@ -6,3 +6,47 @@
     min-height: 100vh;
     
 }
+
+.va-input-wrapper--solid{
+    --va-input-wrapper-border-color:black!important;
+}
+
+.va-input-wrapper--focused {
+    --va-input-wrapper-border-color: var(--va-input-wrapper-color)!important;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.table{
+    .left{
+        text-align: left;
+    }
+    .right{
+        text-align: right;
+    }
+    thead{
+        tr{
+            background-color: silver;
+            th{
+                padding: 5px;
+            }
+        }
+    }
+    tbody{
+        tr{
+        
+            background-color: #f5f8f9;
+            &:hover{
+                background-color: antiquewhite;
+            }
+            td{
+                padding: 5px;
+            }
+        }
+    }
+}
