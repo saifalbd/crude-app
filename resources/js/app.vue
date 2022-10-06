@@ -1,26 +1,44 @@
 <template>
-    <div class="page">
-        <UserForm></UserForm>
-
+<div class="app">
+        <div class="left">
+            <ul>
+                <li @click="$router.push({name:'user.index'})">
+                    User
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <RouterView></RouterView>
+        </div>
+       
     </div>
 </template>
 
-<script>
-    import UserCreate from './components/userCreate.vue';
-    export default {
-        components:{UserForm:UserCreate}
-        
-    }
+<script setup>
+  
 </script>
 
 
 <style lang="scss" scoped>
-    .page{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    .app{
+        width: 100%;
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 200px auto;
+        .left{
+            min-height: 100%;
+            border-right: 1px solid pink;
+            ul{
+                li{
+                    line-height: 40px;
+                    color: green;
+                    cursor: pointer;
+                    border-bottom: 1px solid black;
+                    
+                }
+            }
+        }
+    }
+    </style>
     
-}
-</style>
+

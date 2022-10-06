@@ -13,6 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
+       
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('disk');
+            $table->string('file_name');
+            $table->string('path');
+            $table->timestamps();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -28,6 +37,7 @@ return new class extends Migration
             $table->foreignId('user_id')->unique();
             $table->date('birth_date')->nullable();
             $table->integer('age')->nullable();
+            $table->foreignId('image_id')->nullable();
             $table->timestamps();
         });  
 
