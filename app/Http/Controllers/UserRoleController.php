@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class UserController extends Controller
+class UserRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $roles = UserRole::all();
+        return response()->json($roles);
+        
     }
 
     /**
@@ -35,26 +38,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'email'=>['required','email'],
-            'name'=>['required','string'],
-           // 'role'=>['required','numeric'],
-            'password'=>['required','string'],
-            'image'=>['nullable','image'],
-            'profile'=>['required','array'],
-            'profile.age'=>['nullable','numeric'],
-            'profile.birth_date'=>['nullable','date'],
-        ]);
+        $request->validate(['role'=>['required','string']]);
+        $title = $request->role;
+        $slug = Str::slug($title);
+       $userRole =  UserRole::create(compact('title','slug'));
 
-        if($request->file('image')){
-            $image = $this->imageUpload($request->file('image'),'public');
-            return $image;
-        }
-      
-        $user = User::create($request->toArray());
-        $user->roles()->attach(1);
-        
-        return $request->toArray();
+       return response()->json($userRole);
     }
 
     /**

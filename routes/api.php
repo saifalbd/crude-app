@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserRoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,4 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::apiResource('/users',UserController::class)->names('user');
+Route::apiResource('/user-roles',UserRoleController::class)->names('userRole')->only(['index','store','destroy']);

@@ -40,7 +40,22 @@ return new class extends Migration
             $table->date('birth_date')->nullable();
             $table->integer('age')->nullable();
             $table->timestamps();
+        });
+        
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('slug');
+            $table->string('title');
+            $table->timestamps();
         });  
+
+
+        Schema::create('user_roles', function (Blueprint $table) {
+            $table->foreignId('user_id');
+            $table->foreignId('role_id')->nullable();
+        });  
+
+
 
     }
 
@@ -54,5 +69,7 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('profiles');
         Schema::dropIfExists('images');
+        Schema::dropIfExists('roles');
+        Schema::dropIfExists('user_roles');
     }
 };
